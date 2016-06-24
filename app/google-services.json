@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "209859409424",
+    "firebase_url": "https://admob-app-id-2720978403.firebaseio.com",
+    "project_id": "admob-app-id-2720978403",
+    "storage_bucket": "admob-app-id-2720978403.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209859409424:android:5a60f753b83456c5",
+        "android_client_info": {
+          "package_name": "meghal.developer.nightsight.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209859409424-lpn9tn664t4dv3134lo2qsettqcj5fgv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfT10qNqXdFxNlSlP9ncEJ3lzdCxweOFE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

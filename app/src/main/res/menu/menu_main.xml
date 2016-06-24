@@ -1,0 +1,13 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.brightness.view.ChangeBrightness">
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="300"
+        android:title="Setting"
+        android:icon="@drawable/ic_settings_deep_orange_a400_36dp"
+        app:showAsAction="always"/>
+
+</menu>
