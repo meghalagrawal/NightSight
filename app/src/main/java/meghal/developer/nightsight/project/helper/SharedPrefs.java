@@ -36,7 +36,7 @@ public class SharedPrefs {
     }
 
     public boolean showNotification() {
-        return pref.getBoolean(KEY_SHOW_NOTIFICATION, false);
+        return pref.getBoolean(KEY_SHOW_NOTIFICATION, true);
     }
 
     public void setService(boolean service) {

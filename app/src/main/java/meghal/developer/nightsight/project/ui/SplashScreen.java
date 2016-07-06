@@ -11,14 +11,12 @@ import meghal.developer.nightsight.project.ui.brightness.view.ChangeBrightness;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private TextView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        logo = (TextView) findViewById(R.id.logo);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

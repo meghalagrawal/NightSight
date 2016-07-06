@@ -52,6 +52,7 @@ public class Darkness extends Service {
     public void onCreate() {
         super.onCreate();
         sharedPreferences = this.getSharedPreferences(SharedPrefs.PREF_NAME, Activity.MODE_PRIVATE);
+        Log.i(TAG, "Service Created");
 
     }
 
@@ -64,7 +65,6 @@ public class Darkness extends Service {
         if (sharedPreferences.getBoolean(SharedPrefs.KEY_SHOW_NOTIFICATION, true)) {
             startForeground(NOTIFICATION_ID, showNotification());
         }
-        Log.i(TAG, "Service Created");
         createView();
         Log.i(TAG, "Service Started");
 
@@ -136,7 +136,7 @@ public class Darkness extends Service {
          * the status bar.
          */
         wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        wmParams.gravity = Gravity.LEFT | Gravity.TOP;
+        wmParams.gravity = Gravity.START | Gravity.TOP;
         wmParams.x = 0;
         wmParams.y = 0;
 
@@ -149,10 +149,12 @@ public class Darkness extends Service {
         myView.setBackgroundColor(ContextCompat.
                 getColor(this, sharedPreferences.getInt(SharedPrefs.KEY_COLOR_ID, R.color.black)));
 
+
         // }
         wmParams.alpha = (1.0f - ((BRIGHTNESS + 55) / (float) 255));
         myView.setClickable(false);
         wm.addView(myView, wmParams);
+
     }
 
     @Subscribe

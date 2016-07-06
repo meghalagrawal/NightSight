@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Night Sight</string>
+    <string name="app_name">NightSight</string>
     <string name="banner_home_footer">ca-app-pub-1777826392710731/5674444808</string>
-    <string name="developer_name">#MadeWithLove By Meghal </string>
-    <string name="developer_email">meghal.nit@gmail.com</string>
+    <string name="developer_name">Made By Team #CodeNicely</string>
+    <string name="developer_email">codenicely@gmail.com</string>
     <string name="version">Version 1.0 ( Beta )</string>
     <string name="about_developer">About Developer</string>
 </resources>

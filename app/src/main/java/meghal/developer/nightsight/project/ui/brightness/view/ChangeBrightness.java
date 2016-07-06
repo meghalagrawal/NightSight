@@ -1,20 +1,31 @@
 package meghal.developer.nightsight.project.ui.brightness.view;
 
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.afollestad.assent.Assent;
+import com.afollestad.assent.AssentActivity;
+import com.afollestad.assent.AssentCallback;
+import com.afollestad.assent.PermissionResultSet;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,7 +40,7 @@ import meghal.developer.nightsight.project.services.Darkness;
 import meghal.developer.nightsight.project.ui.brightness.model.ColorData;
 import meghal.developer.nightsight.project.ui.setting.view.Setting;
 
-public class ChangeBrightness extends AppCompatActivity {
+public class ChangeBrightness extends AssentActivity {
 
     private static final String TAG = "ChangeBrightness";
     private SeekBar seekBar;
@@ -40,6 +51,12 @@ public class ChangeBrightness extends AppCompatActivity {
     private AdView adView;
     TextView seekValue;
     Toolbar toolbar;
+    private RelativeLayout parent;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +64,55 @@ public class ChangeBrightness extends AppCompatActivity {
         setContentView(R.layout.activity_change_brightness);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         initialize();
+//        createPermissionListeners();
 
+        //     Dexter.continuePendingRequestsIfPossible(allPermissionsListener);
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(ChangeBrightness.this, Darkness.class);
+                final Intent in = new Intent(ChangeBrightness.this, Darkness.class);
 
                 if (sharedPrefs.isService()) {
                     stopService(in);
                     sharedPrefs.setService(false);
                     startStop.setText("Start");
                 } else {
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                        Log.i(TAG, "Marshmallow");
+                        // Take Permission
+                        if (!Assent.isPermissionGranted(Assent.SYSTEM_ALERT_WINDOW)) {
+                            // The if statement checks if the permission has already been granted before
+                            Assent.requestPermissions(new AssentCallback() {
+                                @Override
+                                public void onPermissionResult(PermissionResultSet result) {
+                                    Log.i(TAG, "Marshmallow");
+
+                                    if (result.isGranted(Assent.SYSTEM_ALERT_WINDOW)) {
+                                        getApplicationContext().startService(in);
+                                        sharedPrefs.setService(true);
+                                        startStop.setText("Stop");
+
+                                    }
+                                    // Permission granted or denied
+                                }
+                            }, 691, Assent.SYSTEM_ALERT_WINDOW);
+                        }
+
+                    } else {
+                        Log.i(TAG, "Not Marshmallow");
+
+                        getApplicationContext().startService(in);
+                        sharedPrefs.setService(true);
+                        startStop.setText("Stop");
+
+                    }
+                    /*
                     getApplicationContext().startService(in);
-                    sharedPrefs.setService(true);
-                    startStop.setText("Stop");
+                        sharedPrefs.setService(true);
+                        startStop.setText("Stop");*/
+                    //             }
+
 
                 }
             }
@@ -76,9 +126,9 @@ public class ChangeBrightness extends AppCompatActivity {
                                           boolean fromUser) {
 
                 seekValue.setText("( Brightness " + progresValue / 2 + "% )");
+                sharedPrefs.setBrightness(progresValue);
 
                 if (sharedPrefs.isService()) {
-                    sharedPrefs.setBrightness(progresValue);
                     BrightnessEvent brightnessEvent = new BrightnessEvent(sharedPrefs.getBrightness());
                     EventBus.getDefault().postSticky(brightnessEvent);
                 }
@@ -97,10 +147,14 @@ public class ChangeBrightness extends AppCompatActivity {
         if (sharedPrefs.getColor() == 0) {
             sharedPrefs.setColorId(R.color.black);
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     void initialize() {
 
+        parent = (RelativeLayout) findViewById(R.id.parent);
         adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
@@ -121,9 +175,10 @@ public class ChangeBrightness extends AppCompatActivity {
         seekBar = (SeekBar) findViewById(R.id.seekBar1);
         startStop = (Button) findViewById(R.id.startStop);
         seekValue = (TextView) findViewById(R.id.seekPercentage);
+        seekValue.setText("( Brightness " + sharedPrefs.getBrightness()/2 + "% )");
 
         seekBar.setMax(200);
-        seekBar.setProgress(0);
+        seekBar.setProgress(sharedPrefs.getBrightness());
 
         if (sharedPrefs.isService()) {
             startStop.setText("Stop");
@@ -215,6 +270,8 @@ public class ChangeBrightness extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
 
 

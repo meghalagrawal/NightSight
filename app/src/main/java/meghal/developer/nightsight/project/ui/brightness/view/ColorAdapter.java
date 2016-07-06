@@ -30,7 +30,8 @@ public class ColorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ColorAdapter(Context context) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        sharedPrefs=new SharedPrefs(context);
+        sharedPrefs = new SharedPrefs(context);
+        SELECTED_COLOR=sharedPrefs.getColor();
     }
 
     @Override
@@ -50,6 +51,7 @@ public class ColorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             colorViewHolder.selectedImage.setVisibility(View.VISIBLE);
         } else {
             colorViewHolder.selectedImage.setVisibility(View.GONE);
+
         }
 
         colorViewHolder.colorView.setOnClickListener(new View.OnClickListener() {

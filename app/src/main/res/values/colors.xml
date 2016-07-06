@@ -3,18 +3,32 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#000000</color>
+    <color name="splashBackground">#FFF800</color>
 
     <color name="black">#000000</color>
     <color name="orange">#FFA726</color>
-    <color name="pink">#EC407A</color>
+    <color name="pink">#7C7C7C</color>
     <color name="purple">#AB47BC</color>
     <color name="grey">#232947</color>
     <color name="blue">#42A5F5</color>
     <color name="green">#26A69A</color>
-    <color name="yellow">#FFEE58</color>
+    <color name="yellow">#36311F</color>
     <color name="white">#FFFFFF</color>
     <color name="brown">#8B4513</color>
     <color name="whitish">#FFE5D4</color>
     <color name="light_blue">#7EBDC3</color>
     <color name="light_green">#29E7CD</color>
-</resources>
+</resources><!--
+<color name="black">#000000</color>
+<color name="orange">#FFA726</color>
+<color name="pink">#EC407A</color>
+<color name="purple">#AB47BC</color>
+<color name="grey">#232947</color>
+<color name="blue">#42A5F5</color>
+<color name="green">#26A69A</color>
+<color name="yellow">#FFEE58</color>
+<color name="white">#FFFFFF</color>
+<color name="brown">#8B4513</color>
+<color name="whitish">#FFE5D4</color>
+<color name="light_blue">#7EBDC3</color>
+<color name="light_green">#29E7CD</color>-->
