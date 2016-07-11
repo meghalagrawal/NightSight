@@ -1,11 +1,9 @@
 package meghal.developer.nightsight.project.ui.brightness.view;
 
-import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.afollestad.assent.Assent;
 import com.afollestad.assent.AssentActivity;
-import com.afollestad.assent.AssentCallback;
-import com.afollestad.assent.PermissionResultSet;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.appindexing.AppIndex;
@@ -78,10 +73,20 @@ public class ChangeBrightness extends AssentActivity {
                     sharedPrefs.setService(false);
                     startStop.setText("Start");
                 } else {
-                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (Settings.canDrawOverlays(ChangeBrightness.this)) {
+                            getApplicationContext().startService(in);
+                            sharedPrefs.setService(true);
+                            startStop.setText("Stop");
+
+                        } else {
+                            Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                            startActivity(myIntent);
+
+                        }
                         Log.i(TAG, "Marshmallow");
                         // Take Permission
-                        if (!Assent.isPermissionGranted(Assent.SYSTEM_ALERT_WINDOW)) {
+                    /*    if (!Assent.isPermissionGranted(Assent.SYSTEM_ALERT_WINDOW)) {
                             // The if statement checks if the permission has already been granted before
                             Assent.requestPermissions(new AssentCallback() {
                                 @Override
@@ -89,16 +94,13 @@ public class ChangeBrightness extends AssentActivity {
                                     Log.i(TAG, "Marshmallow");
 
                                     if (result.isGranted(Assent.SYSTEM_ALERT_WINDOW)) {
-                                        getApplicationContext().startService(in);
-                                        sharedPrefs.setService(true);
-                                        startStop.setText("Stop");
 
                                     }
                                     // Permission granted or denied
                                 }
                             }, 691, Assent.SYSTEM_ALERT_WINDOW);
                         }
-
+*/
                     } else {
                         Log.i(TAG, "Not Marshmallow");
 
@@ -175,7 +177,7 @@ public class ChangeBrightness extends AssentActivity {
         seekBar = (SeekBar) findViewById(R.id.seekBar1);
         startStop = (Button) findViewById(R.id.startStop);
         seekValue = (TextView) findViewById(R.id.seekPercentage);
-        seekValue.setText("( Brightness " + sharedPrefs.getBrightness()/2 + "% )");
+        seekValue.setText("( Brightness " + sharedPrefs.getBrightness() / 2 + "% )");
 
         seekBar.setMax(200);
         seekBar.setProgress(sharedPrefs.getBrightness());

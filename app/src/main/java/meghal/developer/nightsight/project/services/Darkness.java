@@ -87,8 +87,8 @@ public class Darkness extends Service {
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setContentTitle("NightView ")
-                .setContentText("NightView is Running ! Tap to open the app")
+        mBuilder.setContentTitle("NightSight ")
+                .setContentText("NightSight is Running ! Tap to open the app")
                 .setSmallIcon(R.mipmap.ic_launcher).setOngoing(true).setContentIntent(resultPendingIntent);
 // Start a lengthy operation in a background thread
         new Thread(
@@ -139,18 +139,10 @@ public class Darkness extends Service {
         wmParams.gravity = Gravity.START | Gravity.TOP;
         wmParams.x = 0;
         wmParams.y = 0;
-
-     /*   if (color != 0) {
-            myView.setBackgroundColor(color));
-
-        } else {
-     */
-//        myView.setBackgroundColor(ContextCompat.getColor(this,R.color.black));
-        myView.setBackgroundColor(ContextCompat.
+  myView.setBackgroundColor(ContextCompat.
                 getColor(this, sharedPreferences.getInt(SharedPrefs.KEY_COLOR_ID, R.color.black)));
 
 
-        // }
         wmParams.alpha = (1.0f - ((BRIGHTNESS + 55) / (float) 255));
         myView.setClickable(false);
         wm.addView(myView, wmParams);

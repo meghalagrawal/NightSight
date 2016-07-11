@@ -5,10 +5,10 @@ android {
 
     defaultConfig {
         applicationId "meghal.developer.nightsight.project"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 24
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.4 (Beta) "
     }
     buildTypes {
         release {
